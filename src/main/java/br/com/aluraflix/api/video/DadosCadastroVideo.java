@@ -1,4 +1,13 @@
 package br.com.aluraflix.api.video;
 
-public record DadosCadastroVideo(String titulo, String descricao, String url) {
+import jakarta.validation.constraints.NotBlank;
+
+public record DadosCadastroVideo(
+        @NotBlank
+        String titulo,
+        @NotBlank
+        String descricao,
+        @NotBlank
+        String url
+) {
 }

@@ -3,6 +3,7 @@ package br.com.aluraflix.api.controller;
 import br.com.aluraflix.api.video.DadosCadastroVideo;
 import br.com.aluraflix.api.video.Video;
 import br.com.aluraflix.api.video.VideoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,12 @@ public class VideoController {
     @Transactional
     public void cadastrar(
             // Agora o Spring sabe que o parâmetro do método cadastrar é para ele puxar do corpo da requisição.
-            @RequestBody DadosCadastroVideo dados
+            @RequestBody
+            //solicitar que o Spring se integre ao Bean Validation
+            @Valid
+            DadosCadastroVideo dados
     ){
+        System.out.println(dados);
         repository.save(new Video(dados));
     }
 }
