@@ -1,15 +1,15 @@
 package br.com.aluraflix.api.controller;
 
 import br.com.aluraflix.api.video.DadosCadastroVideo;
+import br.com.aluraflix.api.video.DadosListagemVideo;
 import br.com.aluraflix.api.video.Video;
 import br.com.aluraflix.api.video.VideoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //Estamos comunicando o Spring que esta é uma classe Restcontroller que precisa ser carregada durante a inicialização do projeto.
 //Desse modo, o Spring irá carregar a classe VideoController toda vez que o projeto for inicializado.
@@ -32,5 +32,10 @@ public class VideoController {
     ){
         System.out.println(dados);
         repository.save(new Video(dados));
+    }
+
+    @GetMapping
+    public Page<DadosListagemVideo> listar(Pageable pageable){
+        return repository.findAll(pageable).map(DadosListagemVideo::new);
     }
 }
