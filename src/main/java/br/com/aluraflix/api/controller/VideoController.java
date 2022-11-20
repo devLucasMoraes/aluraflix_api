@@ -1,6 +1,10 @@
 package br.com.aluraflix.api.controller;
 
-import br.com.aluraflix.api.videos.DadosCadastroVideo;
+import br.com.aluraflix.api.video.DadosCadastroVideo;
+import br.com.aluraflix.api.video.Video;
+import br.com.aluraflix.api.video.VideoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 //Ao chegar uma requisição para /videos o Spring vai detectar que deverá chamar o VideoController.
 @RequestMapping("videos")
 public class VideoController {
+    @Autowired
+    private VideoRepository repository;
     //Estamos comunicando o Spring que ao chegar uma requisição do tipo post para a URL /videos,
     // ele deve chamar o método cadastrar da classe VideoController
     @PostMapping
+    @Transactional
     public void cadastrar(
             // Agora o Spring sabe que o parâmetro do método cadastrar é para ele puxar do corpo da requisição.
-            @RequestBody DadosCadastroVideo video){
-        System.out.println(video);
+            @RequestBody DadosCadastroVideo dados
+    ){
+        repository.save(new Video(dados));
     }
 }
